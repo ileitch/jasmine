@@ -20,6 +20,7 @@ jasmine.Env = function() {
   this.nextSpecId_ = 0;
   this.nextSuiteId_ = 0;
   this.equalityTesters_ = [];
+  this.disabledTags_ = [];
 
   // wrap matchers
   this.matchersClass = function() {
@@ -113,6 +114,16 @@ jasmine.Env.prototype.describe = function(description, specDefinitions) {
   }
 
   return suite;
+};
+
+jasmine.Env.prototype.tag = function() {
+  if (arguments.length > 0) {
+    if (this.currentSuite) {
+      this.currentSuite.tag(arguments);
+    } else {
+      this.currentRunner_.tag(arguments);
+    }
+  }
 };
 
 jasmine.Env.prototype.beforeEach = function(beforeEachFunction) {
@@ -261,4 +272,12 @@ jasmine.Env.prototype.contains_ = function(haystack, needle) {
 
 jasmine.Env.prototype.addEqualityTester = function(equalityTester) {
   this.equalityTesters_.push(equalityTester);
+};
+
+jasmine.Env.prototype.disableTagged = function(tags) {
+  this.disabledTags_ = tags;
+};
+
+jasmine.Env.prototype.disabledTags = function() {
+  return this.disabledTags_;
 };

@@ -516,6 +516,22 @@ var waitsFor = function(latchFunction, optional_timeoutMessage, optional_timeout
 };
 
 /**
+ * Tags a suite of specifications.
+ *
+ * Used to enable/disable a suite at runtime.
+ *
+ * @example:
+ * describe("My experimental suite", function() {
+ *   tag('non-headless', 'work-in-progress');
+ * });
+ *
+ * @param {String} list of tags
+ */
+var tag = function() {
+  jasmine.getEnv().tag(arguments);
+};
+
+/**
  * A function that is called before each spec in a suite.
  *
  * Used for spec setup, including validating assumptions.
