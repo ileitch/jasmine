@@ -116,12 +116,12 @@ jasmine.Env.prototype.describe = function(description, specDefinitions) {
   return suite;
 };
 
-jasmine.Env.prototype.tag = function() {
-  if (arguments.length > 0) {
+jasmine.Env.prototype.tag = function(tags) {
+  if (tags.length > 0) {
     if (this.currentSuite) {
-      this.currentSuite.tag(arguments);
+      this.currentSuite.tag(tags);
     } else {
-      this.currentRunner_.tag(arguments);
+      this.currentRunner_.tag(tags);
     }
   }
 };
