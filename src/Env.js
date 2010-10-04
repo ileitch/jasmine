@@ -96,7 +96,7 @@ jasmine.Env.prototype.describe = function(description, optionsOrSpecDefinitions,
   }
 
   if (options && options.tags) {
-    var tags = (typeof(options.tags.splice) === 'function') ? options.tags : jasmine.util.argsToArray(options.tags);
+    var tags = (typeof(options.tags.splice) === 'function') ? options.tags : [options.tags];
 
     for (var i = 0; i < tags.length; i++) {
       for (var n = 0; n < this.disabledTags_.length; n++) {
