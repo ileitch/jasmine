@@ -63,8 +63,8 @@ jasmine.Suite.prototype.add = function(suiteOrSpec) {
   this.queue.add(suiteOrSpec);
 };
 
-jasmine.Suite.prototype.tag = function() {
-  this.tags_ = arguments;
+jasmine.Suite.prototype.tag = function(tags) {
+  this.tags_ = tags;
 };
 
 jasmine.Suite.prototype.specs = function() {
