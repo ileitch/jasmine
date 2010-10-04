@@ -83,6 +83,7 @@ jasmine.Suite.prototype.execute = function(onComplete) {
   for (i = 0; i < this.tags_.length; i++) {
     for (n = 0; n < this.env.disabledTags().length; n++) {
       if (this.tags_[i] == this.env.disabledTags()[n]) {
+        this.finished = true;
         return;
       }
     }
