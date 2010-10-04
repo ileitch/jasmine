@@ -19,7 +19,6 @@ jasmine.Suite = function(env, description, specDefinitions, parentSuite) {
   self.children_ = [];
   self.suites_ = [];
   self.specs_ = [];
-  self.tags_= [];
 };
 
 jasmine.Suite.prototype.getFullName = function() {
@@ -63,10 +62,6 @@ jasmine.Suite.prototype.add = function(suiteOrSpec) {
   this.queue.add(suiteOrSpec);
 };
 
-jasmine.Suite.prototype.tag = function(tags) {
-  this.tags_ = tags;
-};
-
 jasmine.Suite.prototype.specs = function() {
   return this.specs_;
 };
@@ -80,15 +75,6 @@ jasmine.Suite.prototype.children = function() {
 };
 
 jasmine.Suite.prototype.execute = function(onComplete) {
-  for (var i = 0; i < this.tags_.length; i++) {
-    for (var n = 0; n < this.env.disabledTags().length; n++) {
-      if (this.tags_[i] == this.env.disabledTags()[n]) {
-        this.finish();
-        return;
-      }
-    }
-  }
-
   var self = this;
   this.queue.start(function () {
     self.finish(onComplete);

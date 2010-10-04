@@ -516,22 +516,6 @@ var waitsFor = function(latchFunction, optional_timeoutMessage, optional_timeout
 };
 
 /**
- * Tags a suite of specifications.
- *
- * Used to disable a suite at runtime.
- *
- * @example:
- * describe("My experimental suite", function() {
- *   tag('non-headless', 'work-in-progress');
- * });
- *
- * @param {String} list of tags
- */
-var tag = function() {
-  jasmine.getEnv().tag(arguments);
-};
-
-/**
  * A function that is called before each spec in a suite.
  *
  * Used for spec setup, including validating assumptions.
@@ -566,10 +550,11 @@ var afterEach = function(afterEachFunction) {
  * // TODO: a simple suite with a nested describe block
  *
  * @param {String} description A string, usually the class under test.
+ * @param {Object} optionsOrSpecDefinitions a list of options or the function that defines specs if no options are provided.
  * @param {Function} specDefinitions function that defines several specs.
  */
-var describe = function(description, specDefinitions) {
-  return jasmine.getEnv().describe(description, specDefinitions);
+var describe = function(description, optionsOrSpecDefinitions, specDefinitions) {
+  return jasmine.getEnv().describe(description, optionsOrSpecDefinitions, specDefinitions);
 };
 
 /**

@@ -86,7 +86,27 @@ jasmine.Env.prototype.execute = function() {
   this.currentRunner_.execute();
 };
 
-jasmine.Env.prototype.describe = function(description, specDefinitions) {
+jasmine.Env.prototype.describe = function(description, optionsOrSpecDefinitions, specDefinitions) {
+  var options;
+
+  if (typeof(optionsOrSpecDefinitions) == 'function') {
+    specDefinitions = optionsOrSpecDefinitions;
+  } else {
+    options = optionsOrSpecDefinitions;
+  }
+
+  if (options && options.tags) {
+    var tags = (typeof(options.tags.splice) === 'function') ? options.tags : jasmine.util.argsToArray(options.tags);
+
+    for (var i = 0; i < tags.length; i++) {
+      for (var n = 0; n < this.disabledTags_.length; n++) {
+        if (tags[i] === this.disabledTags_[n]) {
+          return;
+        }
+      }
+    }
+  }
+
   var suite = new jasmine.Suite(this, description, specDefinitions, this.currentSuite);
 
   var parentSuite = this.currentSuite;
@@ -114,16 +134,6 @@ jasmine.Env.prototype.describe = function(description, specDefinitions) {
   }
 
   return suite;
-};
-
-jasmine.Env.prototype.tag = function(tags) {
-  if (tags.length > 0) {
-    if (this.currentSuite) {
-      this.currentSuite.tag(tags);
-    } else {
-      this.currentRunner_.tag(tags);
-    }
-  }
 };
 
 jasmine.Env.prototype.beforeEach = function(beforeEachFunction) {
@@ -276,8 +286,4 @@ jasmine.Env.prototype.addEqualityTester = function(equalityTester) {
 
 jasmine.Env.prototype.disableTagged = function(tags) {
   this.disabledTags_ = tags;
-};
-
-jasmine.Env.prototype.disabledTags = function() {
-  return this.disabledTags_;
 };
